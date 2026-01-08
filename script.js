@@ -21,19 +21,24 @@ function draw(){
 setInterval(draw,50);
 window.addEventListener("resize",()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 
-// SCROLL ANIMATIONS
+// SCROLL ANIMATION
 const cards=document.querySelectorAll(".card");
 const skills=document.querySelectorAll(".skill");
 const timelineItems=document.querySelectorAll(".timeline-item");
 
 function animate(){
   const trigger=window.innerHeight*0.85;
-
   cards.forEach(card=>{if(card.getBoundingClientRect().top<trigger)card.classList.add("show");});
-  skills.forEach(skill=>{if(skill.getBoundingClientRect().top<trigger){skill.querySelector(".bar").style.width=skill.querySelector(".bar").dataset.level;}});
-  timelineItems.forEach(item=>{if(item.getBoundingClientRect().top<trigger)item.classList.add("show");});
+  skills.forEach(skill=>{
+    if(skill.getBoundingClientRect().top<trigger){
+      const bar=skill.querySelector(".bar");
+      bar.style.width=bar.dataset.level;
+    }
+  });
+  timelineItems.forEach(item=>{
+    if(item.getBoundingClientRect().top<trigger)item.classList.add("show");
+  });
 }
-
 window.addEventListener("scroll",animate);
 window.addEventListener("load",animate);
 
@@ -43,7 +48,10 @@ langButtons.forEach(btn=>{
   btn.addEventListener("click",()=>{
     const lang=btn.dataset.lang;
     document.querySelectorAll("[data-text-en]").forEach(el=>{
-      el.textContent=el.dataset["text"+lang.charAt(0).toUpperCase()+lang.slice(1)];
+      if(el.dataset["text"+lang.charAt(0).toUpperCase()+lang.slice(1)]){
+        if(el.tagName==="H3" || el.tagName==="SPAN") el.textContent=el.dataset["text"+lang.charAt(0).toUpperCase()+lang.slice(1)];
+        else el.textContent=el.dataset["text"+lang.charAt(0).toUpperCase()+lang.slice(1)];
+      }
     });
   });
 });
