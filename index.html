@@ -1,82 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ahmed Sghaier - Web Developer</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmed Sghaier | Portfolio</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Matrix Background -->
-  <canvas id="matrix"></canvas>
 
-  <!-- Language Switcher -->
-  <div class="language-switcher">
-    <button data-lang="en">EN</button>
-    <button data-lang="tn">TN</button>
-    <button data-lang="fr">FR</button>
+<!-- MATRIX BACKGROUND -->
+<canvas id="matrix"></canvas>
+
+<!-- LANGUAGE SWITCHER -->
+<div class="language-switcher">
+  <button data-lang="en">EN</button>
+  <button data-lang="tn">TN</button>
+  <button data-lang="fr">FR</button>
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <img src="assets/your_picture.jpg" alt="Ahmed Sghaier" class="hero-pic">
+  <h1>Ahmed Sghaier</h1>
+  <h2>Web Developer</h2>
+  <a href="assets/cv.pdf" target="_blank" class="btn"
+     data-text-en="Download CV" data-text-tn="تحميل السيرة الذاتية" data-text-fr="Télécharger CV">
+     Download CV
+  </a>
+</section>
+
+<!-- ABOUT ME -->
+<section class="card" id="about">
+  <h2 data-text-en="About Me" data-text-tn="عني" data-text-fr="À propos de moi">About Me</h2>
+  <p data-text-en="Ahmed Sghaier, 19yo from Sousse, Tunisia. Focused on studying web development and becoming skilled in various coding languages."
+     data-text-tn="أحمد صغير، 19 سنة من سوسة، تونس. مركز على دراسة تطوير الويب والتقنّي في لغات البرمجة."
+     data-text-fr="Ahmed Sghaier, 19 ans, de Sousse, Tunisie. Focalisé sur l'apprentissage du développement web et la maîtrise de plusieurs langages de programmation.">
+     Ahmed Sghaier, 19yo from Sousse, Tunisia. Focused on studying web development and becoming skilled in various coding languages.
+  </p>
+</section>
+
+<!-- SKILLS -->
+<section class="card skills" id="skills">
+  <h2 data-text-en="Skills" data-text-tn="مهارات" data-text-fr="Compétences">Skills</h2>
+
+  <!-- Python -->
+  <div class="skill">
+    <img src="assets/logos/python.png" alt="Python Logo">
+    <div class="bar-container">
+      <div class="bar" data-level="90%"></div>
+    </div>
   </div>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <img src="assets/your_picture.jpg" alt="Ahmed Sghaier" class="hero-pic">
-    <h1 data-text-en="Ahmed Sghaier" data-text-tn="أحمد صغير" data-text-fr="Ahmed Sghaier"></h1>
-    <h2 data-text-en="Web Developer" data-text-tn="مطوّر ويب" data-text-fr="Développeur Web"></h2>
-    <a href="assets/cv.pdf" target="_blank" class="btn"
-       data-text-en="Download CV" data-text-tn="تحميل السيرة الذاتية" data-text-fr="Télécharger CV"></a>
-  </section>
+  <!-- Java -->
+  <div class="skill">
+    <img src="assets/logos/java.png" alt="Java Logo">
+    <div class="bar-container">
+      <div class="bar" data-level="95%"></div>
+    </div>
+  </div>
 
-  <!-- About Me Card -->
-  <section class="card about" id="about">
-    <h2 data-text-en="About Me" data-text-tn="عليّ" data-text-fr="À propos"></h2>
-    <p data-text-en="I’m Ahmed Sghaier, a 19-year-old Web Developer from Sousse, Tunisia. I am focused on studying web development and becoming highly skilled in multiple programming languages. I enjoy building modern, responsive websites and continuously improving my technical and creative abilities."
-       data-text-tn="أنا أحمد صغير، عمري 19 سنة من سوسة، تونس. نركّز حاليًا على تعلّم تطوير الويب وتطوير مهاراتي في برمجة عدة لغات. نحب نطوّر مواقع حديثة وعصرية ونطوّر روحي تقنيًا وإبداعيًا باستمرار."
-       data-text-fr="Je m’appelle Ahmed Sghaier, j’ai 19 ans et je viens de Sousse, en Tunisie. Je me concentre sur l’apprentissage du développement web et sur l’amélioration de mes compétences en plusieurs langages de programmation. J’aime créer des sites modernes et continuer à évoluer techniquement et créativement."></p>
-  </section>
+  <!-- HTML -->
+  <div class="skill">
+    <img src="assets/logos/html.png" alt="HTML Logo">
+    <div class="bar-container">
+      <div class="bar" data-level="98%"></div>
+    </div>
+  </div>
 
-  <!-- Skills Card -->
-  <section class="card skills" id="skills">
-    <h2 data-text-en="Skills" data-text-tn="مهارات" data-text-fr="Compétences"></h2>
-    <div class="skill" data-name="Python" data-logo="assets/logos/python.png" data-level="90%"></div>
-    <div class="skill" data-name="Java" data-logo="assets/logos/java.png" data-level="95%"></div>
-    <div class="skill" data-name="HTML" data-logo="assets/logos/html.png" data-level="98%"></div>
-    <div class="skill" data-name="CSS" data-logo="assets/logos/css.png" data-level="98%"></div>
-    <div class="skill" data-name="PHP" data-logo="assets/logos/php.png" data-level="96%"></div>
-    <div class="skill" data-name="C++" data-logo="assets/logos/cpp.png" data-level="89%"></div>
-    <div class="skill" data-name="C" data-logo="assets/logos/c.png" data-level="87%"></div>
-  </section>
+  <!-- CSS -->
+  <div class="skill">
+    <img src="assets/logos/css.png" alt="CSS Logo">
+    <div class="bar-container">
+      <div class="bar" data-level="98%"></div>
+    </div>
+  </div>
 
-  <!-- Languages Card -->
-  <section class="card languages" id="languages">
-    <h2 data-text-en="Languages" data-text-tn="اللغات" data-text-fr="Langues"></h2>
-    <ul>
-      <li>Arabic – Native</li>
-      <li>English – C2</li>
-      <li>French – B2</li>
-      <li>Spanish – A2</li>
-    </ul>
-  </section>
+  <!-- PHP -->
+  <div class="skill">
+    <img src="assets/logos/php.png" alt="PHP Logo">
+    <div class="bar-container">
+      <div class="bar" data-level="96%"></div>
+    </div>
+  </div>
 
-  <!-- Experience Card -->
-  <section class="card experience" id="experience">
-    <h2 data-text-en="Experience" data-text-tn="تجربة" data-text-fr="Expérience"></h2>
-    <ul>
-      <li>Sales Manager Intern – 3 months</li>
-      <li>Created high school website (training project)</li>
-      <li>Banner, poster, thumbnail, and AI design projects</li>
-    </ul>
-  </section>
+  <!-- C++ -->
+  <div class="skill">
+    <img src="assets/logos/cpp.png" alt="C++ Logo">
+    <div class="bar-container">
+      <div class="bar" data-level="89%"></div>
+    </div>
+  </div>
 
-  <!-- Contact Card -->
-  <section class="card contact" id="contact">
-    <h2 data-text-en="Contact" data-text-tn="اتصل" data-text-fr="Contact"></h2>
-    <ul>
-      <li>Email: ahmed.websitedev@gmail.com</li>
-      <li>Phone: +216 26 015 033</li>
-      <li>Instagram: @thirdhorus</li>
-    </ul>
-  </section>
+  <!-- C -->
+  <div class="skill">
+    <img src="assets/logos/c.png" alt="C Logo">
+    <div class="bar-container">
+      <div class="bar" data-level="87%"></div>
+    </div>
+  </div>
+</section>
 
-  <script src="script.js"></script>
+<!-- LANGUAGES -->
+<section class="card" id="languages">
+  <h2 data-text-en="Languages" data-text-tn="اللغات" data-text-fr="Langues">Languages</h2>
+  <ul>
+    <li data-text-en="Arabic: Native" data-text-tn="العربية: اللغة الأم" data-text-fr="Arabe: Langue maternelle">Arabic: Native</li>
+    <li data-text-en="English: C2" data-text-tn="الإنجليزية: C2" data-text-fr="Anglais: C2">English: C2</li>
+    <li data-text-en="Spanish: A2" data-text-tn="الإسبانية: A2" data-text-fr="Espagnol: A2">Spanish: A2</li>
+    <li data-text-en="French: B2" data-text-tn="الفرنسية: B2" data-text-fr="Français: B2">French: B2</li>
+  </ul>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="card" id="experience">
+  <h2 data-text-en="Experience" data-text-tn="الخبرة" data-text-fr="Expérience">Experience</h2>
+  <ul>
+    <li data-text-en="Sales Manager (Intern) – 3 months" data-text-tn="مدير مبيعات (تدريب) – 3 أشهر" data-text-fr="Responsable des ventes (Stagiaire) – 3 mois">Sales Manager (Intern) – 3 months</li>
+    <li data-text-en="Created school website as training project" data-text-tn="إنشاء موقع المدرسة كمشروع تدريبي" data-text-fr="Création du site web de l’école dans le cadre d’un projet de formation">Created school website as training project</li>
+    <li data-text-en="Can create banners, thumbnails, posters, AI content" data-text-tn="يمكنني إنشاء لافتات، صور مصغرة، ملصقات، محتوى بالذكاء الاصطناعي" data-text-fr="Peut créer des bannières, vignettes, affiches, contenu IA">Can create banners, thumbnails, posters, AI content</li>
+  </ul>
+</section>
+
+<!-- CONTACT -->
+<section class="card" id="contact">
+  <h2 data-text-en="Contact" data-text-tn="اتصل بي" data-text-fr="Contact">Contact</h2>
+  <p data-text-en="Email: ahmed.websitedev@gmail.com" data-text-tn="البريد الإلكتروني: ahmed.websitedev@gmail.com" data-text-fr="Email: ahmed.websitedev@gmail.com">Email: ahmed.websitedev@gmail.com</p>
+  <p data-text-en="Phone: 26015033" data-text-tn="الهاتف: 26015033" data-text-fr="Téléphone: 26015033">Phone: 26015033</p>
+  <p data-text-en="Instagram: thirdhorus" data-text-tn="إنستغرام: thirdhorus" data-text-fr="Instagram: thirdhorus">Instagram: thirdhorus</p>
+</section>
+
+<script src="script.js"></script>
 </body>
-      </html>
+</html>
