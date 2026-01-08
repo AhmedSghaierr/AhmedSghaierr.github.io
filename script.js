@@ -45,6 +45,7 @@ function animateOnScroll(){
     }
   });
 }
+
 window.addEventListener("scroll",animateOnScroll);
 window.addEventListener("load",animateOnScroll);
 
