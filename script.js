@@ -15,10 +15,10 @@ const drops = [];
 for (let x = 0; x < columns; x++) drops[x] = 1;
 
 function drawMatrix() {
-  ctx.fillStyle = "rgba(13,11,20,0.05)"; // fade effect
+  ctx.fillStyle = "rgba(13,11,20,0.05)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = "#bb8fef"; // purple letters
+  ctx.fillStyle = "#bb8fef";
   ctx.font = fontSize + "px monospace";
 
   for (let i = 0; i < drops.length; i++) {
@@ -58,17 +58,12 @@ function checkScroll() {
   skills.forEach(skill => {
     const skillTop = skill.getBoundingClientRect().top;
     if (skillTop < triggerBottom && !skill.classList.contains("animated")) {
-      const bar = document.createElement("div");
-      bar.classList.add("bar");
-      skill.appendChild(bar);
-
-      // Animate width
-      const level = skill.getAttribute("data-level");
+      skill.classList.add("animated");
+      const bar = skill.querySelector(".bar");
+      const level = bar.getAttribute("data-level");
       setTimeout(() => {
         bar.style.width = level;
       }, 100);
-
-      skill.classList.add("animated");
     }
   });
 }
