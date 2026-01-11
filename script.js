@@ -1,14 +1,13 @@
-/* MATRIX BACKGROUND */
+// MATRIX BACKGROUND
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const fontSize = 16;
 const columns = canvas.width / fontSize;
-const drops = Array.from({length:columns}).fill(1);
+const drops = Array.from({length: columns}).fill(1);
 
 function draw(){
   ctx.fillStyle="rgba(0,0,0,0.06)";
@@ -24,7 +23,7 @@ function draw(){
 }
 setInterval(draw,33);
 
-/* SKILL BAR ANIMATION */
+// SKILL BAR ANIMATION
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -37,15 +36,13 @@ document.querySelectorAll(".bar-fill").forEach(bar=>{
   observer.observe(bar);
 });
 
-/* TRANSLATION */
+// LANGUAGE SWITCHER
 document.querySelectorAll(".language-switcher button").forEach(btn=>{
   btn.onclick = ()=>{
     const lang = btn.dataset.lang;
-
     document.querySelectorAll("[data-text-en]").forEach(el=>{
       el.textContent = el.dataset["text"+lang.charAt(0).toUpperCase()+lang.slice(1)];
     });
-
     document.querySelectorAll(".timeline-item").forEach(item=>{
       item.textContent = item.dataset[lang];
     });
