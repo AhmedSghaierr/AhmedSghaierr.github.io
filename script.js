@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 33);
   }
 
+
   /* =========================
      SKILL BAR ANIMATION
   ========================= */
