@@ -1,5 +1,5 @@
 /* =========================
-   DOM READY (SAFE)
+   DOM READY
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
@@ -86,16 +85,37 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-     EASTER EGG AUDIO
+     EASTER EGG AUDIO + MEME
   ========================= */
   const trigger = document.getElementById("easter-trigger");
   const audio = document.getElementById("easter-audio");
+  const heroPic = document.getElementById("hero-pic");
 
-  if (trigger && audio) {
+  if (trigger && audio && heroPic) {
     trigger.addEventListener("click", () => {
+      // Play audio
       audio.currentTime = 0;
       audio.volume = 0.6;
       audio.play().catch(() => {});
+
+      // Swap hero image to meme
+      const originalSrc = heroPic.src;
+      heroPic.src = "assets/meme.jpg"; // updated meme path
+      heroPic.style.opacity = 0;
+
+      // Fade in meme
+      setTimeout(() => {
+        heroPic.style.opacity = 1;
+      }, 50);
+
+      // After 3 seconds, fade back to original
+      setTimeout(() => {
+        heroPic.style.opacity = 0;
+        setTimeout(() => {
+          heroPic.src = originalSrc;
+          heroPic.style.opacity = 1;
+        }, 500); // matches CSS transition
+      }, 3000);
     });
   }
 
