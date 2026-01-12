@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       canvas.height = window.innerHeight;
     }
 
+
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
