@@ -204,7 +204,7 @@ body {
   .mobile-only { display: none; }
   .pc-layout {
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 4rem;
     padding: 4rem 8%;
   }
@@ -212,12 +212,16 @@ body {
   .pc-left {
     position: sticky;
     top: 60px;
+   display: flex;
+     flex-direction: column;
+     align-items: center;
+     text-align: center;
   }
 
   .pc-pic {
-    width: 260px;
+    width: 240px;
     border-radius: 16px;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem auto;
   }
 
   .pc-right {
