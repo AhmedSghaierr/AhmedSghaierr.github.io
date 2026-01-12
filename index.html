@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ahmed Sghaier | Portfolio</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,91 +14,74 @@
 <canvas id="matrix"></canvas>
 
 <div class="top-right-title" id="easter-trigger">SBA3KHIR YWLDI</div>
-<audio id="easter-audio" src="assets/audio/meme.mp3" preload="auto"></audio>
+<audio id="easter-audio" src="assets/audio/meme.mp3"></audio>
 
-<div class="language-switcher">
-  <button data-lang="en">EN</button>
-  <button data-lang="tn">TN</button>
-  <button data-lang="fr">FR</button>
-</div>
+<!-- MOBILE HERO -->
+<section class="hero mobile-only">
+  <img src="assets/your_picture.jpg" class="hero-pic">
+  <h1>Ahmed Sghaier</h1>
+  <h3>Sousse Medina</h3>
+  <h2>Web Developer</h2>
+</section>
 
-<!-- HERO -->
-<section class="hero">
-  <img src="assets/your_picture.jpg" class="hero-pic" id="hero-pic" alt="Ahmed Picture">
-  <div class="hero-text">
+<!-- PC LAYOUT -->
+<div class="pc-layout">
+
+  <!-- LEFT COLUMN -->
+  <aside class="pc-left">
+    <img src="assets/your_picture.jpg" class="pc-pic">
     <h1>Ahmed Sghaier</h1>
-    <h3>Sousse Medina</h3>
-    <h2 data-text-en="Web Developer" data-text-tn="Développeur Web" data-text-fr="Développeur Web">
-      Web Developer
-    </h2>
-    <a href="assets/cv.pdf" class="btn" data-text-en="Download CV" data-text-tn="CVصب ال" data-text-fr="Télécharger le CV">
-      Download CV
-    </a>
-  </div>
-</section>
+    <p class="location">Sousse Medina</p>
 
-<!-- ABOUT ME -->
-<section class="card">
-  <h2 data-text-en="About Me" data-text-tn="عسلامة" data-text-fr="À propos de moi">About Me</h2>
-  <p data-text-en="Ahmed Sghaier, 19 years old from Sousse, Tunisia. Focused on studying web development and mastering multiple programming languages."
-     data-text-tn="أحمد صغير,19 سنة من سوسة نحب نتعلم تطوير الويب و نتقن برشا لغات اخرين"
-     data-text-fr="Ahmed Sghaier, 19 ans, de Sousse, Tunisie. Concentré sur le développement web et la maîtrise de plusieurs langages.">
-     Ahmed Sghaier, 19 years old from Sousse, Tunisia. Focused on studying web development and mastering multiple programming languages.
-  </p>
-</section>
-
-<!-- SKILLS -->
-<section class="card">
-  <h2 data-text-en="Skills" data-text-tn="المهارات" data-text-fr="Compétences">Skills</h2>
-  <div class="skills-grid">
-    <div class="skill"><img src="assets/logos/python.png" alt="Python"><div class="bar"><div class="bar-fill" data-level="90%"></div></div></div>
-    <div class="skill"><img src="assets/logos/css.png" alt="CSS"><div class="bar"><div class="bar-fill" data-level="98%"></div></div></div>
-    <div class="skill"><img src="assets/logos/php.png" alt="PHP"><div class="bar"><div class="bar-fill" data-level="96%"></div></div></div>
-    <div class="skill"><img src="assets/logos/cpp.png" alt="C++"><div class="bar"><div class="bar-fill" data-level="89%"></div></div></div>
-    <div class="skill"><img src="assets/logos/java.png" alt="Java"><div class="bar"><div class="bar-fill" data-level="95%"></div></div></div>
-    <div class="skill"><img src="assets/logos/html.png" alt="HTML"><div class="bar"><div class="bar-fill" data-level="98%"></div></div></div>
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section class="card">
-  <h2 data-text-en="Timeline" data-text-tn="المسار" data-text-fr="Chronologie">Timeline</h2>
-  <div class="timeline">
-    <div class="timeline-item" data-en="September 2023 — Started Web Development" data-tn="سبتمبر 2023 – بديت نتعلم ويب ديفلوبمنت" data-fr="Septembre 2023 — Début du développement Web">
-      September 2023 — Started Web Development
+    <div class="contact">
+      <div><i class="fa-solid fa-envelope"></i> ahmed.websitedev@gmail.com</div>
+      <div><i class="fa-solid fa-phone"></i> 26 015 033</div>
+      <div><i class="fa-brands fa-instagram"></i> @thirdhorus</div>
     </div>
-    <div class="timeline-item" data-en="May–July 2024 — Internship (Web Development)" data-tn="ماي–جويلية 2024 – خدمت مدير المبيعات في مشروع صغير" data-fr="Mai–Juillet 2024 — J'ai travaillé comme responsable des ventes dans une petite entreprise">
-      May–July 2024 — Worked As A Sales Manager in a small business
-    </div>
-    <div class="timeline-item" data-en="Sep 2024–Feb 2025 — Front-End & Back-End Formation" data-tn="سبتمبر 2024–فيفري 2025 – عملت  فورماسيون فرونت و باك اند" data-fr="Sept 2024–Fév 2025 — Formation Front & Backend">
-      Sep 2024–Feb 2025 — Front-End & Back-End Formation
-    </div>
-    <div class="timeline-item" data-en="2025–Now — Freelance & Portfolio Projects" data-tn="2025–الأن – نخدم اعمال حرة و مشاريع صغيرة" data-fr="2025–Présent — Freelance & Projets">
-      2025–Now — Freelance & Portfolio Projects
-    </div>
-  </div>
-</section>
+  </aside>
 
-<!-- LANGUAGES -->
-<section class="card">
-  <h2 data-text-en="Languages" data-text-tn="لغات" data-text-fr="Langues">Languages</h2>
-  <div class="language-pills">
-    <span>Arabic — Native</span>
-    <span>English — C2</span>
-    <span>French — B2</span>
-    <span>Spanish — A2</span>
-  </div>
-</section>
+  <!-- RIGHT COLUMN -->
+  <main class="pc-right">
 
-<!-- CONTACT -->
-<section class="card">
-  <h2 data-text-en="Contact" data-text-tn="تواصل" data-text-fr="Contact">Contact</h2>
-  <div class="contact">
-    <div><i class="fa-solid fa-envelope"></i> ahmed.websitedev@gmail.com</div>
-    <div><i class="fa-solid fa-phone"></i> 26 015 033</div>
-    <div><i class="fa-brands fa-instagram"></i> @thirdhorus</div>
-  </div>
-</section>
+    <section class="card">
+      <h2>About Me</h2>
+      <p>
+        Ahmed Sghaier, 19 years old from Sousse, Tunisia. Focused on web development
+        and mastering modern technologies.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill"><span>HTML</span><div class="bar"><div class="bar-fill" data-level="98%"></div></div></div>
+        <div class="skill"><span>CSS</span><div class="bar"><div class="bar-fill" data-level="98%"></div></div></div>
+        <div class="skill"><span>JavaScript</span><div class="bar"><div class="bar-fill" data-level="90%"></div></div></div>
+        <div class="skill"><span>PHP</span><div class="bar"><div class="bar-fill" data-level="96%"></div></div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Experience</h2>
+      <ul class="timeline">
+        <li>2023 — Started Web Development</li>
+        <li>2024 — Internship & Sales Manager</li>
+        <li>2025 — Freelance & Projects</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Languages</h2>
+      <div class="language-pills">
+        <span>Arabic — Native</span>
+        <span>English — C2</span>
+        <span>French — B2</span>
+        <span>Spanish — A2</span>
+      </div>
+    </section>
+
+  </main>
+</div>
 
 <script src="script.js"></script>
 </body>
