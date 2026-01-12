@@ -48,3 +48,16 @@ document.querySelectorAll(".language-switcher button").forEach(btn=>{
     });
   };
 });
+// EASTER EGG AUDIO
+const trigger = document.getElementById("easter-trigger");
+const audio = document.getElementById("easter-audio");
+
+let played = false;
+
+trigger.addEventListener("click", () => {
+  if (!played) {
+    audio.volume = 0.6;
+    audio.play().catch(()=>{});
+    played = true;
+  }
+});
