@@ -46,8 +46,7 @@ document.querySelectorAll(".language-switcher button").forEach(btn=>{
     document.querySelectorAll(".timeline-item").forEach(item=>{
       item.textContent = item.dataset[lang];
     });
-  };
-});
+
 // EASTER EGG AUDIO
 const trigger = document.getElementById("easter-trigger");
 const audio = document.getElementById("easter-audio");
