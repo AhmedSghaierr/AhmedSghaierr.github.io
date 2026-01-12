@@ -1,123 +1,33 @@
-/* =========================
-   DOM READY
-========================= */
-document.addEventListener("DOMContentLoaded", () => {
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:#0b0814;color:#f1ecff;}
+#matrix{position:fixed;inset:0;z-index:-1;}
 
-  /* =========================
-     MATRIX BACKGROUND
-  ========================= */
-  const canvas = document.getElementById("matrix");
-  if (canvas && canvas.getContext) {
-    const ctx = canvas.getContext("2d");
+.top-right-title{position:fixed;top:15px;right:20px;color:#c77dff;font-weight:600;cursor:pointer;}
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+.language-switcher{position:fixed;top:15px;left:15px;display:flex;gap:8px;}
+.language-switcher button{background:transparent;border:1px solid #c77dff;color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;}
 
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+.hero{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;padding:70px 20px 40px;gap:20px;}
+.hero-pic{width:170px;height:170px;object-fit:cover;border-radius:22px;border:2px solid #c77dff;box-shadow:0 0 25px #c77dff;transition:opacity 0.5s ease;}
+.hero-text{text-align:center;max-width:400px;}
 
-    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const fontSize = 16;
-    let columns = Math.floor(canvas.width / fontSize);
-    let drops = Array(columns).fill(1);
+.btn{display:inline-block;margin-top:15px;padding:10px 20px;background:linear-gradient(135deg,#7f3cff,#c77dff);border-radius:10px;text-decoration:none;color:#fff;font-weight:600;}
 
-    setInterval(() => {
-      ctx.fillStyle = "rgba(0,0,0,0.06)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#c77dff";
-      ctx.font = fontSize + "px monospace";
+.card{max-width:720px;margin:20px auto;padding:22px;background:rgba(60,30,100,0.85);border-radius:18px;box-shadow:0 0 18px rgba(199,125,255,0.3);}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.skill img{width:36px;margin-bottom:8px;filter:drop-shadow(0 0 6px rgba(199,125,255,0.6));}
+.bar{height:8px;background:#261a33;border-radius:10px;overflow:hidden;}
+.bar-fill{height:100%;width:0;background:linear-gradient(90deg,#9d4edd,#c77dff);border-radius:10px;transition:width 1.4s ease;}
+.timeline{display:flex;flex-direction:column;gap:15px;}
+.timeline-item{padding:12px;border-left:4px solid #c77dff;}
+.language-pills{display:flex;flex-wrap:wrap;gap:12px;}
+.language-pills span{background:linear-gradient(135deg,#7f3cff,#c77dff);padding:8px 16px;border-radius:999px;font-weight:600;}
+.contact div{margin-bottom:12px;}
+.contact i{margin-right:8px;color:#c77dff;}
 
-      for (let i = 0; i < drops.length; i++) {
-        const char = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    }, 33);
-  }
-
-
-  /* =========================
-     SKILL BAR ANIMATION
-  ========================= */
-  const bars = document.querySelectorAll(".bar-fill");
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.width =
-              entry.target.dataset.level || "100%";
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-
-    bars.forEach(bar => observer.observe(bar));
-  }
-
-  /* =========================
-     LANGUAGE SWITCHER
-  ========================= */
-  document.querySelectorAll(".language-switcher button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const lang = btn.dataset.lang;
-
-      document.querySelectorAll("[data-text-en]").forEach(el => {
-        const key =
-          "text" + lang.charAt(0).toUpperCase() + lang.slice(1);
-        if (el.dataset[key]) {
-          el.textContent = el.dataset[key];
-        }
-      });
-
-      document.querySelectorAll(".timeline-item").forEach(item => {
-        if (item.dataset[lang]) {
-          item.textContent = item.dataset[lang];
-        }
-      });
-    });
-  });
-
-  /* =========================
-     EASTER EGG AUDIO + MEME
-  ========================= */
-  const trigger = document.getElementById("easter-trigger");
-  const audio = document.getElementById("easter-audio");
-  const heroPic = document.getElementById("hero-pic");
-
-  if (trigger && audio && heroPic) {
-    trigger.addEventListener("click", () => {
-      // Play audio
-      audio.currentTime = 0;
-      audio.volume = 0.6;
-      audio.play().catch(() => {});
-
-      // Swap hero image to meme
-      const originalSrc = heroPic.src;
-      heroPic.src = "assets/meme.jpg"; // updated meme path
-      heroPic.style.opacity = 0;
-
-      // Fade in meme
-      setTimeout(() => {
-        heroPic.style.opacity = 1;
-      }, 50);
-
-      // After 3 seconds, fade back to original
-      setTimeout(() => {
-        heroPic.style.opacity = 0;
-        setTimeout(() => {
-          heroPic.src = originalSrc;
-          heroPic.style.opacity = 1;
-        }, 500); // matches CSS transition
-      }, 3000);
-    });
-  }
-
-});
+@media(min-width:1024px){
+  .hero{flex-wrap:nowrap;justify-content:space-around;padding:100px 50px;}
+  .hero-text{text-align:left;}
+  .skills-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:600px){.card{margin:16px;}}
