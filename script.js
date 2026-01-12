@@ -86,12 +86,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (!trigger || !audio) return;
 
-  let played = false;
-
-  trigger.addEventListener("click", () => {
-    if (played) return;
-    audio.volume = 0.6;
-    audio.play().catch(() => {});
-    played = true;
-  });
+ trigger.addEventListener("click", () => {
+  audio.currentTime = 0;
+  audio.volume = 0.6;
+  audio.play().catch(() => {});
 });
