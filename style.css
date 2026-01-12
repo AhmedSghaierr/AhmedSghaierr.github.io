@@ -53,6 +53,9 @@ body{
   border:2px solid #c77dff;
   box-shadow:0 0 25px #c77dff;
 }
+.hero-pic {
+  transition: opacity 0.5s ease;
+}
 
 .btn{
   display:inline-block;
