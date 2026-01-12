@@ -136,6 +136,7 @@ body{
 
 @media(max-width:600px){
   .card{margin:16px;}
+
 }
 #easter-trigger{
   cursor: pointer;
