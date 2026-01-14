@@ -1,163 +1,217 @@
-/* ========================
+/* =====================
    GLOBAL RESET
-======================== */
+===================== */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
 body {
-  min-height: 100vh;
-  background: #0b0614;
+  font-family: 'Inter', sans-serif;
+  background: black;
   color: #fff;
   overflow-x: hidden;
 }
 
-/* ========================
+/* =====================
    MATRIX BACKGROUND
-======================== */
+===================== */
 #matrix {
   position: fixed;
   inset: 0;
   z-index: -1;
 }
 
-/* ========================
-   HERO / PROFILE SECTION
-======================== */
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
-  text-align: center;
+/* =====================
+   EASTER TRIGGER
+===================== */
+.top-right-title {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: #c77dff;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 10;
 }
 
-.profile-picture {
-  width: 180px;
-  height: 180px;
-  border-radius: 18px;
-  object-fit: cover;
-  border: 3px solid #b86bff;
-  box-shadow: 0 0 25px rgba(184, 107, 255, 0.6);
+/* =====================
+   LANGUAGE SWITCHER
+===================== */
+.language-switcher {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.language-switcher button {
+  background: transparent;
+  border: 1px solid #c77dff;
+  color: #c77dff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* =====================
+   HERO (FIXED CENTERING)
+===================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;       /* ✅ horizontal center */
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 1100px;         /* ✅ prevents left stick */
+  margin: 0 auto;            /* ✅ centers on PC */
+}
+
+.hero-pic {
+  width: 220px;
+  max-width: 80vw;
+  border-radius: 20px;
+  border: 3px solid #c77dff;
   margin-bottom: 20px;
 }
 
-/* ========================
-   TEXT
-======================== */
-.hero h1 {
-  font-size: 2.2rem;
+.hero-text h1 {
+  font-size: 3rem;
   font-weight: 700;
 }
 
-.hero h2 {
+.hero-text h3 {
   font-size: 1.2rem;
-  color: #caa3ff;
-  margin: 6px 0;
+  opacity: 0.8;
+  margin-top: 5px;
 }
 
-.hero .location {
-  opacity: 0.85;
-  margin-bottom: 20px;
+.hero-text h2 {
+  color: #c77dff;
+  margin: 10px 0 20px;
 }
 
-/* ========================
+/* =====================
    BUTTON
-======================== */
+===================== */
 .btn {
-  background: linear-gradient(135deg, #a855f7, #7c3aed);
-  padding: 14px 28px;
-  border-radius: 30px;
-  color: #fff;
-  text-decoration: none;
+  display: inline-block;
+  background: linear-gradient(135deg, #c77dff, #9d4edd);
+  color: #000;
+  padding: 12px 26px;
+  border-radius: 14px;
   font-weight: 600;
-  transition: 0.3s;
+  text-decoration: none;
 }
 
-.btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #a855f7;
-}
-
-/* ========================
-   SECTIONS
-======================== */
-.section {
-  margin: 30px 16px;
-  padding: 24px;
+/* =====================
+   CARD SECTIONS
+===================== */
+.card {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(120, 60, 200, 0.25);
   border-radius: 20px;
-  background: rgba(88, 28, 135, 0.55);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(6px);
 }
 
-.section h3 {
-  font-size: 1.5rem;
-  margin-bottom: 12px;
+.card h2 {
+  margin-bottom: 15px;
+  color: #fff;
 }
 
-/* ========================
+/* =====================
    SKILLS
-======================== */
-.skill {
-  margin-bottom: 14px;
+===================== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 20px;
 }
 
-.skill span {
-  display: block;
-  margin-bottom: 6px;
+.skill {
+  text-align: center;
+}
+
+.skill img {
+  width: 48px;
+  margin-bottom: 10px;
 }
 
 .bar {
-  height: 10px;
+  width: 100%;
+  height: 8px;
   background: rgba(255,255,255,0.2);
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
 .bar-fill {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, #c084fc, #9333ea);
+  background: #c77dff;
+  transition: width 1.2s ease;
+}
+
+/* =====================
+   TIMELINE
+===================== */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timeline-item {
+  background: rgba(0,0,0,0.35);
+  padding: 12px 16px;
+  border-radius: 10px;
+}
+
+/* =====================
+   LANGUAGES
+===================== */
+.language-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.language-pills span {
+  background: rgba(0,0,0,0.35);
+  padding: 8px 14px;
   border-radius: 20px;
-  animation: fill 1.5s forwards;
 }
 
-@keyframes fill {
-  to { width: var(--level); }
-}
-
-/* ========================
+/* =====================
    CONTACT
-======================== */
+===================== */
+.contact div {
+  margin-bottom: 10px;
+}
+
 .contact a {
-  display: block;
-  color: #caa3ff;
+  color: #c77dff;
   text-decoration: none;
-  margin-bottom: 8px;
 }
 
-.contact a:hover {
-  color: #f1ecff;
-  text-shadow: 0 0 8px #c77dff;
-}
-
-/* ========================
-   PC LAYOUT
-======================== */
-@media (min-width: 1024px) {
-  body {
-    padding: 40px 80px;
+/* =====================
+   DESKTOP CV LAYOUT
+===================== */
+@media (min-width: 900px) {
+  .hero {
+    flex-direction: row;
+    text-align: left;
+    gap: 60px;
   }
 
-  .profile-picture {
-    width: 220px;
-    height: 220px;
-  }
-
-  .hero h1 {
-    font-size: 2.6rem;
+  .hero-text {
+    max-width: 500px;
   }
 }
