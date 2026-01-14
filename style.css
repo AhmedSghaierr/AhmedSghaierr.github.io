@@ -1,191 +1,142 @@
-/* ==========================
-   GLOBAL RESET & BASE
-========================== */
+/* ========================
+   GLOBAL RESET
+======================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
 body {
-  background: #0b0814;
-  color: #f1ecff;
+  min-height: 100vh;
+  background: #0b0614;
+  color: #fff;
+  overflow-x: hidden;
 }
 
-/* ==========================
-   MATRIX CANVAS
-========================== */
+/* ========================
+   MATRIX BACKGROUND
+======================== */
 #matrix {
   position: fixed;
   inset: 0;
   z-index: -1;
 }
 
-/* ==========================
-   TOP RIGHT TITLE / EASTER EGG
-========================== */
-.top-right-title {
-  position: fixed;
-  top: 15px;
-  right: 20px;
-  color: #c77dff;
-  font-weight: 600;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* ==========================
-   LANGUAGE SWITCHER
-========================== */
-.language-switcher {
-  position: fixed;
-  top: 15px;
-  left: 15px;
+/* ========================
+   HERO / PROFILE SECTION
+======================== */
+.hero {
   display: flex;
-  gap: 8px;
-}
-
-.language-switcher button {
-  background: transparent;
-  border: 1px solid #c77dff;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-/* ==========================
-   HERO SECTION (MOBILE)
-========================== */
-.mobile-only {
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
   text-align: center;
-  padding: 80px 20px;
 }
 
-.hero-pic {
-  width: 170px;
-  height: 170px;
+.profile-picture {
+  width: 180px;
+  height: 180px;
+  border-radius: 18px;
   object-fit: cover;
-  border-radius: 20px;
-  border: 2px solid #c77dff;
-  box-shadow: 0 0 25px #c77dff;
-  margin-bottom: 1rem;
+  border: 3px solid #b86bff;
+  box-shadow: 0 0 25px rgba(184, 107, 255, 0.6);
+  margin-bottom: 20px;
 }
 
-/* ==========================
-   BUTTONS
-========================== */
+/* ========================
+   TEXT
+======================== */
+.hero h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.hero h2 {
+  font-size: 1.2rem;
+  color: #caa3ff;
+  margin: 6px 0;
+}
+
+.hero .location {
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+/* ========================
+   BUTTON
+======================== */
 .btn {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #7f3cff, #c77dff);
-  border-radius: 10px;
-  text-decoration: none;
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  padding: 14px 28px;
+  border-radius: 30px;
   color: #fff;
+  text-decoration: none;
   font-weight: 600;
   transition: 0.3s;
 }
 
 .btn:hover {
-  filter: brightness(1.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #a855f7;
 }
 
-/* ==========================
-   CARDS
-========================== */
-.card {
-  max-width: 720px;
-  margin: 20px auto;
-  padding: 2rem;
-  background: rgba(60,30,100,0.85);
-  border-radius: 18px;
-  box-shadow: 0 0 18px rgba(199,125,255,0.3);
+/* ========================
+   SECTIONS
+======================== */
+.section {
+  margin: 30px 16px;
+  padding: 24px;
+  border-radius: 20px;
+  background: rgba(88, 28, 135, 0.55);
+  backdrop-filter: blur(10px);
 }
 
-/* ==========================
+.section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+/* ========================
    SKILLS
-========================== */
-.skills-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-}
-
+======================== */
 .skill {
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 14px;
 }
 
-.skill img {
-  width: 36px;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 0 6px rgba(199,125,255,0.6));
+.skill span {
+  display: block;
+  margin-bottom: 6px;
 }
 
 .bar {
-  height: 8px;
-  background: #261a33;
-  border-radius: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
   overflow: hidden;
 }
 
 .bar-fill {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, #9d4edd, #c77dff);
-  border-radius: 10px;
-  transition: width 1.4s ease;
+  background: linear-gradient(90deg, #c084fc, #9333ea);
+  border-radius: 20px;
+  animation: fill 1.5s forwards;
 }
 
-/* ==========================
-   TIMELINE
-========================== */
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+@keyframes fill {
+  to { width: var(--level); }
 }
 
-.timeline-item {
-  padding: 12px;
-  border-left: 4px solid #c77dff;
-}
-
-/* ==========================
-   LANGUAGE PILLS
-========================== */
-.language-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.language-pills span {
-  background: linear-gradient(135deg, #7f3cff, #c77dff);
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-weight: 600;
-}
-
-/* ==========================
-   CONTACT SECTION
-========================== */
-.contact div {
-  margin-bottom: 12px;
-  font-size: 1rem;
-}
-
-.contact i {
-  margin-right: 8px;
-  color: #c77dff;
-}
-
+/* ========================
+   CONTACT
+======================== */
 .contact a {
-  color: #caa3ff; /* light purple */
+  display: block;
+  color: #caa3ff;
   text-decoration: none;
-  transition: 0.3s;
+  margin-bottom: 8px;
 }
 
 .contact a:hover {
@@ -193,41 +144,20 @@ body {
   text-shadow: 0 0 8px #c77dff;
 }
 
-/* ==========================
+/* ========================
    PC LAYOUT
-========================== */
-.pc-layout {
-  display: none;
-}
-
+======================== */
 @media (min-width: 1024px) {
-  .mobile-only { display: none; }
-  .pc-layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 4rem;
-    padding: 4rem 8%;
+  body {
+    padding: 40px 80px;
   }
 
-  .pc-left {
-    position: sticky;
-    top: 60px;
-   display: flex;
-     flex-direction: column;
-     align-items: center;
-     text-align: center;
+  .profile-picture {
+    width: 220px;
+    height: 220px;
   }
 
-  .pc-pic {
-    width: 240px;
-    border-radius: 16px;
-    margin: 0 auto 1rem auto;
+  .hero h1 {
+    font-size: 2.6rem;
   }
-
-  .pc-right {
-    max-width: 900px;
-  }
-
-  .card { font-size: 1.05rem; }
-  .skills-grid { gap: 1.5rem; }
 }
