@@ -1,33 +1,154 @@
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body{background:#0b0814;color:#f1ecff;}
-#matrix{position:fixed;inset:0;z-index:-1;}
-
-.top-right-title{position:fixed;top:15px;right:20px;color:#c77dff;font-weight:600;cursor:pointer;}
-
-.language-switcher{position:fixed;top:15px;left:15px;display:flex;gap:8px;}
-.language-switcher button{background:transparent;border:1px solid #c77dff;color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;}
-
-.hero{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;padding:70px 20px 40px;gap:20px;}
-.hero-pic{width:170px;height:190px;object-fit:cover;border-radius:22px;border:2px solid #c77dff;box-shadow:0 0 25px #c77dff;transition:opacity 0.5s ease;}
-.hero-text{text-align:center;max-width:400px;}
-
-.btn{display:inline-block;margin-top:15px;padding:10px 20px;background:linear-gradient(135deg,#7f3cff,#c77dff);border-radius:10px;text-decoration:none;color:#fff;font-weight:600;}
-
-.card{max-width:720px;margin:20px auto;padding:22px;background:rgba(60,30,100,0.85);border-radius:18px;box-shadow:0 0 18px rgba(199,125,255,0.3);}
-.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
-.skill img{width:36px;margin-bottom:8px;filter:drop-shadow(0 0 6px rgba(199,125,255,0.6));}
-.bar{height:8px;background:#261a33;border-radius:10px;overflow:hidden;}
-.bar-fill{height:100%;width:0;background:linear-gradient(90deg,#9d4edd,#c77dff);border-radius:10px;transition:width 1.4s ease;}
-.timeline{display:flex;flex-direction:column;gap:15px;}
-.timeline-item{padding:12px;border-left:4px solid #c77dff;}
-.language-pills{display:flex;flex-wrap:wrap;gap:12px;}
-.language-pills span{background:linear-gradient(135deg,#7f3cff,#c77dff);padding:8px 16px;border-radius:999px;font-weight:600;}
-.contact div{margin-bottom:12px;}
-.contact i{margin-right:8px;color:#c77dff;}
-
-@media(min-width:1024px){
-  .hero{flex-wrap:nowrap;justify-content:space-around;padding:100px 50px;}
-  .hero-text{text-align:left;}
-  .skills-grid{grid-template-columns:repeat(3,1fr);}
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-@media(max-width:600px){.card{margin:16px;}}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: black;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* MATRIX */
+#matrix {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+/* TOP RIGHT */
+.top-right-title {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: #c77dff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* LANGUAGE */
+.language-switcher {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.language-switcher button {
+  background: transparent;
+  border: 1px solid #c77dff;
+  color: #c77dff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 25px;
+  padding: 40px 20px;
+}
+
+.hero-pic {
+  width: 230px;
+  border-radius: 20px;
+  border: 3px solid #c77dff;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+}
+
+.hero-text h2 {
+  color: #c77dff;
+  margin: 10px 0;
+}
+
+.btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #c77dff, #9d4edd);
+  color: black;
+  padding: 12px 28px;
+  border-radius: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* CARDS */
+.card {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(120, 60, 200, 0.25);
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+
+/* SKILLS */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+}
+
+.skill img {
+  width: 48px;
+}
+
+.bar {
+  background: rgba(255,255,255,0.2);
+  height: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0;
+  background: #c77dff;
+  transition: width 1.2s ease;
+}
+
+/* LANGUAGES */
+.language-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.language-pills span {
+  background: rgba(0,0,0,0.35);
+  padding: 8px 14px;
+  border-radius: 20px;
+}
+
+/* CONTACT */
+.contact div {
+  margin-bottom: 10px;
+}
+
+.contact a {
+  color: #c77dff;
+  text-decoration: none;
+}
+
+/* DESKTOP LAYOUT */
+@media (min-width: 900px) {
+  .hero {
+    flex-direction: row;
+    text-align: left;
+    gap: 60px;
+  }
+}
