@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
       canvas.height = window.innerHeight;
     }
 
-
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
@@ -43,23 +42,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
+     CARD FADE IN + FLOAT
+  ========================= */
+  const cards = document.querySelectorAll(".card");
+
+  const cardObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show", "float");
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  cards.forEach(card => cardObserver.observe(card));
+
+  /* =========================
      SKILL BAR ANIMATION
   ========================= */
   const bars = document.querySelectorAll(".bar-fill");
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.width = entry.target.dataset.level || "100%";
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
 
-    bars.forEach(bar => observer.observe(bar));
-  }
+  const barObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.width =
+            (entry.target.dataset.level || "100") + "%";
+          barObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  bars.forEach(bar => barObserver.observe(bar));
 
   /* =========================
      LANGUAGE SWITCHER
@@ -84,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-     EASTER EGG AUDIO + MEME IMAGE WITH FADE
+     EASTER EGG AUDIO + IMAGE
   ========================= */
   const trigger = document.getElementById("easter-trigger");
   const audio = document.getElementById("easter-audio");
@@ -92,25 +111,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (trigger && audio && heroPic) {
     trigger.addEventListener("click", () => {
-      // Play audio
       audio.currentTime = 0;
       audio.volume = 0.6;
       audio.play().catch(() => {});
 
-      // Save original src if not saved
       const originalSrc = heroPic.dataset.original || heroPic.src;
       heroPic.dataset.original = originalSrc;
 
-      // Fade out, change to meme, fade in
       heroPic.style.transition = "opacity 0.5s ease";
       heroPic.style.opacity = 0;
 
       setTimeout(() => {
         heroPic.src = "assets/meme.jpg";
         heroPic.style.opacity = 1;
-      }, 500); // wait 0.5s for fade out
+      }, 500);
 
-      // After 5 seconds, restore original picture with fade
       setTimeout(() => {
         heroPic.style.opacity = 0;
         setTimeout(() => {
