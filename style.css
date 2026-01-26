@@ -1,6 +1,6 @@
-/* =========================
-   GLOBAL RESET
-========================= */
+/* =======================
+   RESET & BASE
+======================= */
 * {
   margin: 0;
   padding: 0;
@@ -11,21 +11,18 @@
 body {
   background: #0b0814;
   color: #f1ecff;
-  overflow-x: hidden;
+  line-height: 1.6;
 }
 
-/* =========================
-   MATRIX BACKGROUND
-========================= */
 #matrix {
   position: fixed;
   inset: 0;
   z-index: -1;
 }
 
-/* =========================
-   FIXED UI ELEMENTS
-========================= */
+/* =======================
+   FIXED UI
+======================= */
 .top-right-title {
   position: fixed;
   top: 15px;
@@ -33,7 +30,6 @@ body {
   color: #c77dff;
   font-weight: 600;
   cursor: pointer;
-  z-index: 10;
 }
 
 .language-switcher {
@@ -42,7 +38,6 @@ body {
   left: 15px;
   display: flex;
   gap: 8px;
-  z-index: 10;
 }
 
 .language-switcher button {
@@ -52,95 +47,124 @@ body {
   padding: 6px 10px;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
-.language-switcher button:hover {
-  background: #c77dff;
-  color: #000;
-}
-
-/* =========================
-   HERO SECTION
-========================= */
+/* =======================
+   HERO
+======================= */
 .hero {
+  min-height: 90vh;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 25px;
-  padding: 80px 20px 50px;
-  max-width: 1100px;
-  margin: auto;
+  gap: 22px;
+  text-align: center;
+  padding: 40px 20px;
 }
 
 .hero-pic {
   width: 230px;
   height: 250px;
   object-fit: cover;
-  border-radius: 20px;
+  border-radius: 26px;
   border: 2px solid #c77dff;
-  box-shadow: 0 0 25px rgba(199, 125, 255, 0.8);
-  transition: opacity 0.5s ease;
-}
-
-.hero-text {
-  text-align: center;
-  max-width: 420px;
+  box-shadow: 0 0 30px rgba(199, 125, 255, 0.8);
 }
 
 .hero-text h1 {
-  font-size: 3rem;
+  font-size: 2.4rem;
   font-weight: 700;
 }
 
-.hero-text h2 {
-  color: #c77dff;
-  margin: 8px 0 12px;
+.hero-text h3 {
+  color: #caa8ff;
+  font-weight: 500;
 }
 
-/* =========================
-   BUTTON
-========================= */
+.hero-text h2 {
+  margin-top: 6px;
+  color: #c77dff;
+}
+
 .btn {
   display: inline-block;
-  margin-top: 15px;
-  padding: 10px 22px;
+  margin-top: 18px;
+  padding: 12px 26px;
   background: linear-gradient(135deg, #7f3cff, #c77dff);
-  border-radius: 10px;
+  border-radius: 12px;
   text-decoration: none;
   color: #fff;
   font-weight: 600;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 20px #c77dff;
-}
-
-/* =========================
-   CARD SECTIONS
-========================= */
+/* =======================
+   CARD STYLE (LIKE IMAGE)
+======================= */
 .card {
-  max-width: 720px;
-  margin: 24px auto;
-  padding: 24px;
-  background: rgba(60, 30, 100, 0.85);
-  border-radius: 18px;
-  box-shadow: 0 0 18px rgba(199, 125, 255, 0.3);
+  max-width: 760px;
+  margin: 30px auto;
+  padding: 32px;
+  background: linear-gradient(
+    180deg,
+    rgba(120, 60, 200, 0.9),
+    rgba(70, 30, 130, 0.95)
+  );
+  border-radius: 26px;
+  box-shadow:
+    0 0 25px rgba(199, 125, 255, 0.35),
+    inset 0 0 30px rgba(255, 255, 255, 0.05);
+
+  /* animation base */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
+/* Fade-in trigger */
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Floating animation */
+.card.float {
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+/* Card titles */
 .card h2 {
-  margin-bottom: 12px;
+  font-size: 2rem;
+  margin-bottom: 16px;
 }
 
-/* =========================
+/* Card text */
+.card p {
+  font-size: 1.05rem;
+  color: #f3efff;
+}
+
+/* =======================
+   FLOAT KEYFRAMES
+======================= */
+@keyframes floatCard {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* =======================
    SKILLS
-========================= */
+======================= */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 22px;
 }
 
@@ -149,14 +173,14 @@ body {
 }
 
 .skill img {
-  width: 36px;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 0 6px rgba(199, 125, 255, 0.6));
+  width: 38px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 6px rgba(199, 125, 255, 0.7));
 }
 
 .bar {
   height: 8px;
-  background: #261a33;
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -169,25 +193,23 @@ body {
   transition: width 1.4s ease;
 }
 
-/* =========================
+/* =======================
    TIMELINE
-========================= */
+======================= */
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
 }
 
 .timeline-item {
-  padding: 12px 16px;
+  padding-left: 14px;
   border-left: 4px solid #c77dff;
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
 }
 
-/* =========================
+/* =======================
    LANGUAGES
-========================= */
+======================= */
 .language-pills {
   display: flex;
   flex-wrap: wrap;
@@ -195,15 +217,15 @@ body {
 }
 
 .language-pills span {
-  background: linear-gradient(135deg, #7f3cff, #c77dff);
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 999px;
+  background: linear-gradient(135deg, #7f3cff, #c77dff);
   font-weight: 600;
 }
 
-/* =========================
+/* =======================
    CONTACT
-========================= */
+======================= */
 .contact div {
   margin-bottom: 12px;
 }
@@ -214,34 +236,20 @@ body {
 }
 
 .contact a {
-  color: #c77dff;
+  color: #fff;
   text-decoration: none;
 }
 
-/* =========================
-   DESKTOP IMPROVEMENTS
-========================= */
-@media (min-width: 1024px) {
-  .hero {
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    padding: 110px 60px;
-  }
-
-  .hero-text {
-    text-align: left;
-  }
-
-  .skills-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* =========================
-   MOBILE TWEAKS
-========================= */
+/* =======================
+   RESPONSIVE
+======================= */
 @media (max-width: 600px) {
   .card {
-    margin: 16px;
+    margin: 20px 14px;
+    padding: 24px;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
   }
 }
