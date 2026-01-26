@@ -1,255 +1,198 @@
-/* =======================
-   RESET & BASE
-======================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+/* ========== RESET ========== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
 }
 
-body {
-  background: #0b0814;
-  color: #f1ecff;
-  line-height: 1.6;
+body{
+  background:#08060f;
+  color:#e9e4ff;
+  overflow-x:hidden;
 }
 
-#matrix {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
+/* ========== MATRIX ========== */
+#matrix{
+  position:fixed;
+  inset:0;
+  z-index:-1;
 }
 
-/* =======================
-   FIXED UI
-======================= */
-.top-right-title {
-  position: fixed;
-  top: 15px;
-  right: 20px;
-  color: #c77dff;
-  font-weight: 600;
-  cursor: pointer;
+/* ========== TOP UI ========== */
+.top-right-title{
+  position:fixed;
+  top:16px;
+  right:22px;
+  color:#b983ff;
+  font-weight:600;
+  cursor:pointer;
+  z-index:5;
 }
 
-.language-switcher {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  display: flex;
-  gap: 8px;
+.language-switcher{
+  position:fixed;
+  top:15px;
+  left:15px;
+  display:flex;
+  gap:8px;
+  z-index:5;
 }
 
-.language-switcher button {
-  background: transparent;
-  border: 1px solid #c77dff;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
+.language-switcher button{
+  background:rgba(255,255,255,0.05);
+  border:1px solid #b983ff;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-/* =======================
-   HERO
-======================= */
-.hero {
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 22px;
-  text-align: center;
-  padding: 40px 20px;
+/* ========== HERO ========== */
+.hero{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:30px;
+  padding:90px 20px 50px;
 }
 
-.hero-pic {
-  width: 230px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 26px;
-  border: 2px solid #c77dff;
-  box-shadow: 0 0 30px rgba(199, 125, 255, 0.8);
+.hero-pic{
+  width:160px;
+  height:160px;
+  border-radius:20px;
+  object-fit:cover;
+  border:2px solid #b983ff;
+  box-shadow:0 0 20px rgba(185,131,255,0.6);
 }
 
-.hero-text h1 {
-  font-size: 2.4rem;
-  font-weight: 700;
+.hero-text{
+  max-width:420px;
+  text-align:center;
 }
 
-.hero-text h3 {
-  color: #caa8ff;
-  font-weight: 500;
+/* ========== BUTTON ========== */
+.btn{
+  display:inline-block;
+  margin-top:18px;
+  padding:10px 22px;
+  background:linear-gradient(135deg,#7a3cff,#b983ff);
+  border-radius:10px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
 }
 
-.hero-text h2 {
-  margin-top: 6px;
-  color: #c77dff;
+/* ========== CARDS ========== */
+.card{
+  max-width:650px;
+  margin:24px auto;
+  padding:20px 22px;
+  background:rgba(20,15,35,0.85); /* darker */
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.5);
+  opacity:0;
+  transform:translateY(25px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
 }
 
-.btn {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 12px 26px;
-  background: linear-gradient(135deg, #7f3cff, #c77dff);
-  border-radius: 12px;
-  text-decoration: none;
-  color: #fff;
-  font-weight: 600;
+.card.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
-/* =======================
-   CARD STYLE (LIKE IMAGE)
-======================= */
-.card {
-  max-width: 760px;
-  margin: 30px auto;
-  padding: 32px;
-  background: linear-gradient(
-    180deg,
-    rgba(120, 60, 200, 0.9),
-    rgba(70, 30, 130, 0.95)
-  );
-  border-radius: 26px;
-  box-shadow:
-    0 0 25px rgba(199, 125, 255, 0.35),
-    inset 0 0 30px rgba(255, 255, 255, 0.05);
-
-  /* animation base */
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+/* floating */
+.card.float{
+  animation:float 6s ease-in-out infinite;
 }
 
-/* Fade-in trigger */
-.card.show {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes float{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+  100%{transform:translateY(0);}
 }
 
-/* Floating animation */
-.card.float {
-  animation: floatCard 6s ease-in-out infinite;
+/* ========== SKILLS ========== */
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
 }
 
-/* Card titles */
-.card h2 {
-  font-size: 2rem;
-  margin-bottom: 16px;
+.skill img{
+  width:32px;
+  margin-bottom:6px;
 }
 
-/* Card text */
-.card p {
-  font-size: 1.05rem;
-  color: #f3efff;
+.bar{
+  height:7px;
+  background:#1b1529;
+  border-radius:10px;
+  overflow:hidden;
 }
 
-/* =======================
-   FLOAT KEYFRAMES
-======================= */
-@keyframes floatCard {
-  0% {
-    transform: translateY(0);
+.bar-fill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#9d4edd,#c77dff);
+  border-radius:10px;
+  transition:width 1.6s ease;
+}
+
+/* ========== TIMELINE ========== */
+.timeline{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.timeline-item{
+  padding:10px 14px;
+  border-left:3px solid #b983ff;
+}
+
+/* ========== LANGUAGES ========== */
+.language-pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.language-pills span{
+  background:rgba(185,131,255,0.15);
+  padding:7px 14px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+/* ========== CONTACT ========== */
+.contact div{
+  margin-bottom:10px;
+}
+
+.contact a{
+  color:#caa6ff;
+  text-decoration:none;
+}
+
+/* ========== RESPONSIVE ========== */
+@media(min-width:1024px){
+  .hero{
+    justify-content:flex-start;
+    max-width:1100px;
+    margin:auto;
   }
-  50% {
-    transform: translateY(-8px);
+  .hero-text{
+    text-align:left;
   }
-  100% {
-    transform: translateY(0);
+  .skills-grid{
+    grid-template-columns:repeat(3,1fr);
   }
 }
 
-/* =======================
-   SKILLS
-======================= */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 22px;
-}
-
-.skill {
-  text-align: center;
-}
-
-.skill img {
-  width: 38px;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 0 6px rgba(199, 125, 255, 0.7));
-}
-
-.bar {
-  height: 8px;
-  background: rgba(0, 0, 0, 0.35);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.bar-fill {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, #9d4edd, #c77dff);
-  border-radius: 10px;
-  transition: width 1.4s ease;
-}
-
-/* =======================
-   TIMELINE
-======================= */
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.timeline-item {
-  padding-left: 14px;
-  border-left: 4px solid #c77dff;
-}
-
-/* =======================
-   LANGUAGES
-======================= */
-.language-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.language-pills span {
-  padding: 8px 18px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #7f3cff, #c77dff);
-  font-weight: 600;
-}
-
-/* =======================
-   CONTACT
-======================= */
-.contact div {
-  margin-bottom: 12px;
-}
-
-.contact i {
-  margin-right: 8px;
-  color: #c77dff;
-}
-
-.contact a {
-  color: #fff;
-  text-decoration: none;
-}
-
-/* =======================
-   RESPONSIVE
-======================= */
-@media (max-width: 600px) {
-  .card {
-    margin: 20px 14px;
-    padding: 24px;
-  }
-
-  .hero-text h1 {
-    font-size: 2rem;
+@media(max-width:600px){
+  .card{
+    margin:18px 14px;
   }
 }
