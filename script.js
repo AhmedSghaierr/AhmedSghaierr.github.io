@@ -60,25 +60,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach(card => cardObserver.observe(card));
 
-  /* =========================
-     SKILL BAR ANIMATION
-  ========================= */
-  const bars = document.querySelectorAll(".bar-fill");
+ /* =========================
+   SKILL BAR ANIMATION (FIXED)
+========================= */
+const bars = document.querySelectorAll(".bar-fill");
 
-  const barObserver = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.width =
-            (entry.target.dataset.level || "100") + "%";
-          barObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.4 }
-  );
+const barObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.width = entry.target.dataset.level;
+        barObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.5 }
+);
 
-  bars.forEach(bar => barObserver.observe(bar));
+bars.forEach(bar => barObserver.observe(bar));
 
   /* =========================
      LANGUAGE SWITCHER
