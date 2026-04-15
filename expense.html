@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Expense Tracker</title>
 
-</head>
 <style>
 body {
   margin: 0;
@@ -18,45 +17,48 @@ body {
   color: white;
 }
 
-/* MAIN APP CARD */
+/* APP CONTAINER */
 .container {
-  width: 90%;
+  width: 92%;
   max-width: 420px;
   background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
-  padding: 20px;
+  padding: 18px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: fadeIn 0.6s ease;
 }
 
 /* TITLE */
 h2 {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 
 /* INPUTS */
 input, select {
   width: 100%;
-  padding: 12px;
-  margin-top: 10px;
+  padding: 10px;
+  margin-top: 8px;
   border-radius: 10px;
   border: none;
   outline: none;
   background: rgba(255,255,255,0.1);
   color: white;
+  font-size: 13px;
 }
 
 input::placeholder {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.5);
 }
 
 /* BUTTON */
 button {
   width: 100%;
   margin-top: 10px;
-  padding: 12px;
+  padding: 10px;
   border: none;
   border-radius: 10px;
   background: linear-gradient(90deg, #6366f1, #8b5cf6);
@@ -64,63 +66,80 @@ button {
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
+  font-size: 13px;
 }
 
 button:hover {
   transform: scale(1.03);
 }
 
+/* FILTER */
+#filter {
+  margin-top: 8px;
+}
+
 /* LIST */
 ul {
   list-style: none;
   padding: 0;
-  margin-top: 15px;
+  margin-top: 12px;
 }
 
+/* ITEM */
 li {
   background: rgba(255,255,255,0.08);
   margin-top: 10px;
-  padding: 12px;
+  padding: 10px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
+  animation: slideUp 0.3s ease;
 }
 
 /* SMALL TEXT */
 small {
   opacity: 0.7;
+  font-size: 11px;
 }
 
 /* ACTION BUTTONS */
 li button {
   width: auto;
-  padding: 6px 10px;
+  padding: 5px 8px;
+  font-size: 11px;
   margin-right: 5px;
-  font-size: 12px;
   background: rgba(255,255,255,0.15);
 }
 
-/* TOTAL BOX */
+/* TOTAL */
 #totals {
-  margin-top: 15px;
+  margin-top: 12px;
   text-align: center;
   font-weight: bold;
   padding: 10px;
   background: rgba(255,255,255,0.08);
   border-radius: 10px;
+  font-size: 13px;
 }
 
-/* FILTER */
-#filter {
-  margin-top: 10px;
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(15px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes slideUp {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
 }
 </style>
+</head>
 
 <body>
 
 <div class="container">
-  <h2>Expense Tracker</h2>
+  <h2>💰 Expense Tracker</h2>
 
   <input id="name" placeholder="Expense name">
   <input id="amount" type="number" placeholder="Amount">
@@ -134,9 +153,17 @@ li button {
 
   <button onclick="addExpense()">Add Expense</button>
 
+  <select id="filter" onchange="render()">
+    <option value="all">All</option>
+    <option value="Food">Food</option>
+    <option value="Transport">Transport</option>
+    <option value="Study">Study</option>
+    <option value="Other">Other</option>
+  </select>
+
   <ul id="list"></ul>
 
-  <div class="totals" id="totals"></div>
+  <div id="totals"></div>
 </div>
 
 <script>
@@ -192,30 +219,26 @@ function clearInputs() {
 
 function render() {
   const list = document.getElementById("list");
+  const filter = document.getElementById("filter").value;
   const totals = document.getElementById("totals");
 
   list.innerHTML = "";
 
   let total = 0;
-  let categoryTotals = {};
 
-  expenses.forEach((exp, index) => {
+  const filtered = expenses.filter(e => {
+    return filter === "all" || e.category === filter;
+  });
+
+  filtered.forEach((exp, index) => {
     total += exp.amount;
-
-    categoryTotals[exp.category] = (categoryTotals[exp.category] || 0) + exp.amount;
 
     list.innerHTML += `
       <li>
-        <div class="row">
-          <strong>${exp.name}</strong>
-          <span>${exp.amount} DT</span>
-        </div>
+        <strong>${exp.name}</strong> - ${exp.amount} DT
+        <small>${exp.category} • ${exp.date}</small>
 
-        <div class="small">
-          ${exp.category} • ${exp.date}
-        </div>
-
-        <div class="actions">
+        <div>
           <button onclick="editExpense(${index})">Edit</button>
           <button onclick="deleteExpense(${index})">Delete</button>
         </div>
@@ -223,13 +246,7 @@ function render() {
     `;
   });
 
-  let categoryText = "";
-  for (let cat in categoryTotals) {
-    categoryText += `${cat}: ${categoryTotals[cat]} DT\n`;
-  }
-
-  totals.innerText =
-    `Total: ${total} DT\n\nBy Category:\n${categoryText}`;
+  totals.innerText = "Total: " + total + " DT";
 }
 
 render();
