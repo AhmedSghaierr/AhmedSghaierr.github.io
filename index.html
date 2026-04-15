@@ -1,204 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Expense Tracker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ahmed Sghaier | Portfolio</title>
 
-<style>
-  body {
-    font-family: Arial;
-    background: #f5f5f5;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  .container {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-
-  h2 { text-align: center; }
-
-  input, select, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-  }
-
-  button {
-    background: black;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 6px;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-  }
-
-  li {
-    background: #eee;
-    padding: 10px;
-    margin-top: 8px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .small {
-    font-size: 12px;
-    opacity: 0.7;
-  }
-
-  .actions button {
-    margin-top: 5px;
-    padding: 5px;
-    font-size: 12px;
-  }
-
-  .totals {
-    margin-top: 15px;
-    font-size: 14px;
-    background: #fafafa;
-    padding: 10px;
-    border-radius: 8px;
-  }
-</style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
-  <h2>Expense Tracker</h2>
+<!-- BACKGROUND -->
+<canvas id="matrix"></canvas>
 
-  <input id="name" placeholder="Expense name">
-  <input id="amount" type="number" placeholder="Amount">
+<!-- EASTER EGG -->
+<div class="top-right-title" id="easter-trigger">SBA3KHIR YWLDI</div>
+<audio id="easter-audio" src="assets/audio/meme.mp3" preload="auto"></audio>
 
-  <select id="category">
-    <option value="Food">Food</option>
-    <option value="Transport">Transport</option>
-    <option value="Study">Study</option>
-    <option value="Other">Other</option>
-  </select>
-
-  <button onclick="addExpense()">Add Expense</button>
-
-  <ul id="list"></ul>
-
-  <div class="totals" id="totals"></div>
+<!-- LANGUAGE SWITCHER -->
+<div class="language-switcher">
+  <button data-lang="en">EN</button>
+  <button data-lang="tn">TN</button>
+  <button data-lang="fr">FR</button>
 </div>
 
-<script>
-let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <img src="assets/your_picture.jpg" class="hero-pic" alt="Ahmed Picture">
 
-function addExpense() {
-  const name = document.getElementById("name").value;
-  const amount = document.getElementById("amount").value;
-  const category = document.getElementById("category").value;
+  <div class="hero-text">
+    <h1>Ahmed Sghaier</h1>
+    <h3>Sousse Medina</h3>
 
-  if (!name || !amount) return;
+    <h2 data-text-en="Web Developer"
+        data-text-tn="Développeur Web"
+        data-text-fr="Développeur Web">
+      Web Developer
+    </h2>
 
-  expenses.push({
-    name,
-    amount: Number(amount),
-    category,
-    date: new Date().toLocaleDateString()
-  });
+    <a href="assets/cv.pdf" class="btn">Download CV</a>
+  </div>
+</section>
 
-  save();
-  clearInputs();
-  render();
-}
+<!-- ================= ABOUT ================= -->
+<section class="card">
+  <h2>About Me</h2>
+  <p>
+    Ahmed Sghaier, 19 years old from Sousse, Tunisia.
+    Focused on studying web development and mastering multiple programming languages.
+  </p>
+</section>
 
-function deleteExpense(index) {
-  expenses.splice(index, 1);
-  save();
-  render();
-}
+<!-- ================= SKILLS ================= -->
+<section class="card">
+  <h2>Skills</h2>
 
-function editExpense(index) {
-  const exp = expenses[index];
+  <div class="skills-grid">
+    <div class="skill"><img src="assets/logos/python.png"><div class="bar"><div class="bar-fill" data-level="90%"></div></div></div>
+    <div class="skill"><img src="assets/logos/css.png"><div class="bar"><div class="bar-fill" data-level="98%"></div></div></div>
+    <div class="skill"><img src="assets/logos/php.png"><div class="bar"><div class="bar-fill" data-level="96%"></div></div></div>
+    <div class="skill"><img src="assets/logos/cpp.png"><div class="bar"><div class="bar-fill" data-level="89%"></div></div></div>
+    <div class="skill"><img src="assets/logos/java.png"><div class="bar"><div class="bar-fill" data-level="95%"></div></div></div>
+    <div class="skill"><img src="assets/logos/html.png"><div class="bar"><div class="bar-fill" data-level="98%"></div></div></div>
+  </div>
+</section>
 
-  const newName = prompt("Edit name:", exp.name);
-  const newAmount = prompt("Edit amount:", exp.amount);
+<!-- ================= PROJECTS ================= -->
+<section class="card">
+  <h2>Projects</h2>
 
-  if (newName && newAmount) {
-    expenses[index].name = newName;
-    expenses[index].amount = Number(newAmount);
-    save();
-    render();
-  }
-}
+  <div class="project">
+    <h3>Expense Tracker</h3>
+    <p>Simple finance tracker built with HTML, CSS, JavaScript.</p>
+    <a href="expense.html" class="btn">View Project</a>
+  </div>
+</section>
 
-function save() {
-  localStorage.setItem("expenses", JSON.stringify(expenses));
-}
+<!-- ================= TIMELINE ================= -->
+<section class="card">
+  <h2>Timeline</h2>
 
-function clearInputs() {
-  document.getElementById("name").value = "";
-  document.getElementById("amount").value = "";
-}
+  <div class="timeline">
+    <div class="timeline-item">Sep 2023 — Started Web Development</div>
+    <div class="timeline-item">May–July 2024 — Internship (Sales Manager)</div>
+    <div class="timeline-item">Sep 2024–Feb 2025 — Front & Back-End Training</div>
+    <div class="timeline-item">2025–Now — Freelance & Projects</div>
+  </div>
+</section>
 
-function render() {
-  const list = document.getElementById("list");
-  const totals = document.getElementById("totals");
+<!-- LIVE PROJECTS -->
+<section class="card">
+  <h2 data-text-en="Live Projects" data-text-tn="مشاريع حية" data-text-fr="Projets en direct">
+    Live Projects
+  </h2>
 
-  list.innerHTML = "";
+  <div class="projects-grid">
 
-  let total = 0;
-  let categoryTotals = {};
+    <div class="project-card">
+      <h3>Expense Tracker</h3>
+      <p>Simple personal finance tracker with local storage (HTML, CSS, JavaScript).</p>
+      <a href="expense.html" target="_blank" class="project-btn">View Project</a>
+    </div>
 
-  expenses.forEach((exp, index) => {
-    total += exp.amount;
+  </div>
+</section>
 
-    categoryTotals[exp.category] = (categoryTotals[exp.category] || 0) + exp.amount;
 
-    list.innerHTML += `
-      <li>
-        <div class="row">
-          <strong>${exp.name}</strong>
-          <span>${exp.amount} DT</span>
-        </div>
+<!-- ================= LANGUAGES ================= -->
+<section class="card">
+  <h2>Languages</h2>
 
-        <div class="small">
-          ${exp.category} • ${exp.date}
-        </div>
+  <div class="language-pills">
+    <span>Arabic — Native</span>
+    <span>English — C2</span>
+    <span>French — B2</span>
+    <span>Spanish — A2</span>
+  </div>
+</section>
 
-        <div class="actions">
-          <button onclick="editExpense(${index})">Edit</button>
-          <button onclick="deleteExpense(${index})">Delete</button>
-        </div>
-      </li>
-    `;
-  });
+<!-- ================= CONTACT ================= -->
+<section class="card">
+  <h2>Contact</h2>
 
-  let categoryText = "";
-  for (let cat in categoryTotals) {
-    categoryText += `${cat}: ${categoryTotals[cat]} DT\n`;
-  }
+  <div class="contact">
+    <div><i class="fa-solid fa-envelope"></i> <a href="mailto:ahmed.websitedev@gmail.com">ahmed.websitedev@gmail.com</a></div>
+    <div><i class="fa-solid fa-phone"></i> <a href="tel:+21626015033">26 015 033</a></div>
+    <div><i class="fa-brands fa-instagram"></i> <a href="https://www.instagram.com/thirdhorus/" target="_blank">@thirdhorus</a></div>
+  </div>
+</section>
 
-  totals.innerText =
-    `Total: ${total} DT\n\nBy Category:\n${categoryText}`;
-}
-
-render();
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
