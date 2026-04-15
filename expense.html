@@ -37,20 +37,40 @@ h2 {
   font-size: 20px;
 }
 
-/* INPUTS */
-input, select {
-  width: 100%;
-  padding: 10px;
+/* INPUT GROUP */
+.input-group {
+  display: flex;
+  gap: 8px;
   margin-top: 8px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  font-size: 13px;
 }
 
-input:focus, select:focus {
-  box-shadow: 0 0 0 2px #6366f1;
+/* INPUT BOX WITH ICON */
+.input-box {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 8px 10px;
+  flex: 1;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* ICON */
+.input-box span {
+  margin-right: 6px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* INPUT INSIDE */
+.input-box input,
+.input-box select {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: white;
+  font-size: 12px;
+  width: 100%;
 }
 
 /* BUTTON */
@@ -132,25 +152,41 @@ canvas {
 <div class="container">
   <h2>💰 Expense Tracker</h2>
 
-  <input id="name" placeholder="Expense name">
-  <input id="amount" type="number" placeholder="Amount">
+  <!-- 🔥 PRO INPUTS -->
+  <div class="input-group">
+    <div class="input-box">
+      <span>📝</span>
+      <input id="name" placeholder="Name">
+    </div>
 
-  <select id="category">
-    <option value="Food">Food</option>
-    <option value="Transport">Transport</option>
-    <option value="Study">Study</option>
-    <option value="Other">Other</option>
-  </select>
+    <div class="input-box">
+      <span>💰</span>
+      <input id="amount" type="number" placeholder="Amount">
+    </div>
+  </div>
+
+  <div class="input-box">
+    <span>📂</span>
+    <select id="category">
+      <option value="Food">Food</option>
+      <option value="Transport">Transport</option>
+      <option value="Study">Study</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
 
   <button onclick="addExpense()">Add Expense</button>
 
-  <select id="filter" onchange="render()">
-    <option value="all">All</option>
-    <option value="Food">Food</option>
-    <option value="Transport">Transport</option>
-    <option value="Study">Study</option>
-    <option value="Other">Other</option>
-  </select>
+  <div class="input-box">
+    <span>🔍</span>
+    <select id="filter" onchange="render()">
+      <option value="all">All</option>
+      <option value="Food">Food</option>
+      <option value="Transport">Transport</option>
+      <option value="Study">Study</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
 
   <ul id="list"></ul>
 
