@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Expense Tracker</title>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 body {
   margin: 0;
@@ -17,13 +19,12 @@ body {
   color: white;
 }
 
-/* APP CONTAINER */
+/* APP */
 .container {
   width: 92%;
   max-width: 420px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255,255,255,0.06);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   padding: 18px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
@@ -33,7 +34,6 @@ body {
 /* TITLE */
 h2 {
   text-align: center;
-  margin-bottom: 10px;
   font-size: 20px;
 }
 
@@ -44,14 +44,13 @@ input, select {
   margin-top: 8px;
   border-radius: 10px;
   border: none;
-  outline: none;
   background: rgba(255,255,255,0.1);
   color: white;
   font-size: 13px;
 }
 
-input::placeholder {
-  color: rgba(255,255,255,0.5);
+input:focus, select:focus {
+  box-shadow: 0 0 0 2px #6366f1;
 }
 
 /* BUTTON */
@@ -59,52 +58,41 @@ button {
   width: 100%;
   margin-top: 10px;
   padding: 10px;
-  border: none;
   border-radius: 10px;
+  border: none;
   background: linear-gradient(90deg, #6366f1, #8b5cf6);
   color: white;
-  font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
-  font-size: 13px;
 }
 
-button:hover {
-  transform: scale(1.03);
-}
-
-/* FILTER */
-#filter {
-  margin-top: 8px;
-}
+button:hover { transform: scale(1.03); }
+button:active { transform: scale(0.97); }
 
 /* LIST */
 ul {
   list-style: none;
   padding: 0;
-  margin-top: 12px;
 }
 
-/* ITEM */
 li {
   background: rgba(255,255,255,0.08);
   margin-top: 10px;
   padding: 10px;
   border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
   animation: slideUp 0.3s ease;
+  transition: 0.2s;
 }
 
-/* SMALL TEXT */
-small {
-  opacity: 0.7;
-  font-size: 11px;
+li:hover {
+  transform: scale(1.02);
+  background: rgba(255,255,255,0.12);
 }
 
-/* ACTION BUTTONS */
-li button {
+small { opacity: 0.7; }
+
+/* ACTIONS */
+.actions button {
   width: auto;
   padding: 5px 8px;
   font-size: 11px;
@@ -116,22 +104,25 @@ li button {
 #totals {
   margin-top: 12px;
   text-align: center;
-  font-weight: bold;
   padding: 10px;
   background: rgba(255,255,255,0.08);
   border-radius: 10px;
-  font-size: 13px;
+}
+
+/* CHART */
+canvas {
+  margin-top: 15px;
 }
 
 /* ANIMATIONS */
 @keyframes fadeIn {
-  from {opacity: 0; transform: translateY(15px);}
-  to {opacity: 1; transform: translateY(0);}
+  from {opacity:0; transform:translateY(15px);}
+  to {opacity:1; transform:translateY(0);}
 }
 
 @keyframes slideUp {
-  from {opacity: 0; transform: translateY(10px);}
-  to {opacity: 1; transform: translateY(0);}
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -164,15 +155,27 @@ li button {
   <ul id="list"></ul>
 
   <div id="totals"></div>
+
+  <canvas id="chart"></canvas>
 </div>
 
 <script>
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+let chart;
+
+function getIcon(category) {
+  switch(category) {
+    case "Food": return "🍔";
+    case "Transport": return "🚕";
+    case "Study": return "📚";
+    default: return "💸";
+  }
+}
 
 function addExpense() {
-  const name = document.getElementById("name").value;
-  const amount = document.getElementById("amount").value;
-  const category = document.getElementById("category").value;
+  const name = nameInput.value;
+  const amount = amountInput.value;
+  const category = categoryInput.value;
 
   if (!name || !amount) return;
 
@@ -188,21 +191,20 @@ function addExpense() {
   render();
 }
 
-function deleteExpense(index) {
-  expenses.splice(index, 1);
+function deleteExpense(i) {
+  expenses.splice(i,1);
   save();
   render();
 }
 
-function editExpense(index) {
-  const exp = expenses[index];
-
-  const newName = prompt("Edit name:", exp.name);
-  const newAmount = prompt("Edit amount:", exp.amount);
+function editExpense(i) {
+  const e = expenses[i];
+  const newName = prompt("Edit name:", e.name);
+  const newAmount = prompt("Edit amount:", e.amount);
 
   if (newName && newAmount) {
-    expenses[index].name = newName;
-    expenses[index].amount = Number(newAmount);
+    expenses[i].name = newName;
+    expenses[i].amount = Number(newAmount);
     save();
     render();
   }
@@ -213,9 +215,13 @@ function save() {
 }
 
 function clearInputs() {
-  document.getElementById("name").value = "";
-  document.getElementById("amount").value = "";
+  nameInput.value = "";
+  amountInput.value = "";
 }
+
+const nameInput = document.getElementById("name");
+const amountInput = document.getElementById("amount");
+const categoryInput = document.getElementById("category");
 
 function render() {
   const list = document.getElementById("list");
@@ -223,22 +229,31 @@ function render() {
   const totals = document.getElementById("totals");
 
   list.innerHTML = "";
-
   let total = 0;
+  let categoryTotals = {};
 
-  const filtered = expenses.filter(e => {
-    return filter === "all" || e.category === filter;
-  });
+  const filtered = expenses.filter(e =>
+    filter === "all" || e.category === filter
+  );
 
   filtered.forEach((exp, index) => {
     total += exp.amount;
 
+    categoryTotals[exp.category] =
+      (categoryTotals[exp.category] || 0) + exp.amount;
+
     list.innerHTML += `
       <li>
-        <strong>${exp.name}</strong> - ${exp.amount} DT
-        <small>${exp.category} • ${exp.date}</small>
+        <div style="display:flex; justify-content:space-between;">
+          <div>
+            <strong>${getIcon(exp.category)} ${exp.name}</strong>
+            <br>
+            <small>${exp.category} • ${exp.date}</small>
+          </div>
+          <div><strong>${exp.amount} DT</strong></div>
+        </div>
 
-        <div>
+        <div class="actions">
           <button onclick="editExpense(${index})">Edit</button>
           <button onclick="deleteExpense(${index})">Delete</button>
         </div>
@@ -247,6 +262,37 @@ function render() {
   });
 
   totals.innerText = "Total: " + total + " DT";
+
+  updateChart(categoryTotals);
+}
+
+function updateChart(data) {
+  const ctx = document.getElementById("chart");
+
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: Object.keys(data),
+      datasets: [{
+        data: Object.values(data),
+        backgroundColor: [
+          "#6366f1",
+          "#8b5cf6",
+          "#22c55e",
+          "#f59e0b"
+        ]
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          labels: { color: "white" }
+        }
+      }
+    }
+  });
 }
 
 render();
