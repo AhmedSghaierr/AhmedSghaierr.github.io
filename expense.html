@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expense Tracker</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      background: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      background: #eee;
+      margin-top: 5px;
+      border-radius: 6px;
+    }
+
+    .total {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Expense Tracker</h2>
+
+  <input type="text" id="name" placeholder="Expense name">
+  <input type="number" id="amount" placeholder="Amount">
+
+  <button onclick="addExpense()">Add</button>
+
+  <ul id="list"></ul>
+
+  <div class="total" id="total">Total: 0</div>
+</div>
+
+<script>
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+function render() {
+  const list = document.getElementById("list");
+  const totalEl = document.getElementById("total");
+
+  list.innerHTML = "";
+  let total = 0;
+
+  expenses.forEach((exp, index) => {
+    total += Number(exp.amount);
+
+    list.innerHTML += `
+      <li>
+        ${exp.name} - ${exp.amount} DT
+        <button onclick="removeExpense(${index})">X</button>
+      </li>
+    `;
+  });
+
+  totalEl.innerText = "Total: " + total + " DT";
+
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+
+function addExpense() {
+  const name = document.getElementById("name").value;
+  const amount = document.getElementById("amount").value;
+
+  if (!name || !amount) return;
+
+  expenses.push({ name, amount });
+
+  document.getElementById("name").value = "";
+  document.getElementById("amount").value = "";
+
+  render();
+}
+
+function removeExpense(index) {
+  expenses.splice(index, 1);
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
