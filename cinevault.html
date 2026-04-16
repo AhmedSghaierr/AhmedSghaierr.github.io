@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CineVault</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+/* ================= GLOBAL ================= */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  background: #000;
+  overflow-x: hidden;
+}
+
+/* CINEMATIC BACKGROUND */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background-size: cover;
+  background-position: center;
+
+  filter: blur(25px) brightness(0.4);
+  transform: scale(1.1);
+
+  z-index: -2;
+}
+
+/* DARK OVERLAY */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to top, #000 30%, transparent 100%);
+  z-index: -1;
+}
+
+/* ================= HERO ================= */
+.hero-center {
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* LOGO */
+.logo {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ff2e63;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+/* SEARCH */
+.search-box {
+  width: 90%;
+  max-width: 350px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 16px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.15);
+
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+
+  color: white;
+  font-size: 14px;
+
+  transition: 0.3s;
+}
+
+.search-box input:focus {
+  border-color: #ff2e63;
+  box-shadow: 0 0 10px rgba(255,46,99,0.5);
+}
+
+/* ================= ROW ================= */
+.row {
+  padding: 20px;
+}
+
+.row h3 {
+  margin-bottom: 10px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.row-posters {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.row-posters img {
+  width: 150px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.row-posters img:hover {
+  transform: scale(1.1);
+}
+
+/* ================= DETAILS ================= */
+#detailsPage { display: none; }
+
+/* HERO */
+.details-hero {
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+}
+
+/* CONTENT CARD */
+.details-content {
+  margin: -60px auto 40px;
+  padding: 25px;
+  max-width: 900px;
+
+  background: rgba(15,15,15,0.85);
+  backdrop-filter: blur(20px);
+
+  border-radius: 20px;
+}
+
+/* POSTER */
+.poster {
+  width: 180px;
+  border-radius: 12px;
+  float: left;
+  margin-right: 20px;
+}
+
+/* BUTTON */
+button {
+  background: linear-gradient(135deg, #ff2e63, #ff6b81);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: white;
+  cursor: pointer;
+
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255,46,99,0.5);
+}
+
+/* SEASONS */
+select {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+/* EPISODES ROW */
+#episodesRow img {
+  border-radius: 10px;
+}
+
+/* EPISODE DETAILS */
+#episodeDetails {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+iframe {
+  width: 80%;
+  height: 60%;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero-center">
+  <div class="logo">CineVault</div>
+
+  <div class="search-box">
+    <input id="search" placeholder="Search movies or series...">
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="home">
+
+  <div class="row">
+    <h3>Trending</h3>
+    <div class="row-posters" id="trending"></div>
+  </div>
+
+  <div class="row">
+    <h3>Top Rated</h3>
+    <div class="row-posters" id="top"></div>
+  </div>
+
+  <div class="row">
+    <h3>Popular</h3>
+    <div class="row-posters" id="popular"></div>
+  </div>
+
+</div>
+
+<script>
+
+const API_KEY = "e80c4ac2851ab20db77422d53f9c846a";
+
+/* LOAD SECTION */
+async function loadSection(url, containerId) {
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+
+  data.results.forEach(item => {
+    if (!item.poster_path) return;
+
+    const img = document.createElement("img");
+    img.src = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
+    img.onclick = () => openDetails(item.id, item.media_type || "movie");
+
+    container.appendChild(img);
+  });
+}
+
+/* SEARCH */
+document.getElementById("search").addEventListener("input", async (e) => {
+  const q = e.target.value;
+
+  if (q.length < 2) return init();
+
+  const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`);
+  const data = await res.json();
+
+  const container = document.getElementById("trending");
+  container.innerHTML = "";
+
+  data.results.forEach(item => {
+    if (!item.poster_path) return;
+
+    const img = document.createElement("img");
+    img.src = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
+    img.onclick = () => openDetails(item.id, item.media_type);
+
+    container.appendChild(img);
+  });
+});
+
+/* DETAILS */
+async function openDetails(id, type) {
+  const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${API_KEY}&append_to_response=videos,credits`);
+  const data = await res.json();
+
+  window.currentShowId = id;
+
+  document.getElementById("home").style.display = "none";
+  document.querySelector(".hero-center").style.display = "none";
+  document.getElementById("detailsPage").style.display = "block";
+
+  document.getElementById("detailsHero").style.backgroundImage =
+    `linear-gradient(to top, black, transparent), url(https://image.tmdb.org/t/p/original${data.backdrop_path})`;
+document.body.style.backgroundImage = `url(https://image.tmdb.org/t/p/original${data.backdrop_path})`;
+
+  const trailer = data.videos.results.find(v => v.type === "Trailer");
+  const cast = data.credits.cast.slice(0,5).map(c => c.name).join(", ");
+
+  let seasonsHTML = "";
+
+  if (type === "tv" && data.seasons) {
+    seasonsHTML = `
+      <h3>Seasons</h3>
+      <select id="seasonSelect" onchange="loadEpisodes(this.value)">
+        ${data.seasons.map(s =>
+          `<option value="${s.season_number}">${s.name} (${s.episode_count} eps)</option>`
+        ).join("")}
+      </select>
+
+      <div id="episodesRow" style="display:flex;gap:10px;overflow-x:auto;margin-top:15px;"></div>
+
+      <div id="episodeDetails" style="margin-top:20px;"></div>
+    `;
+  }
+
+  document.getElementById("detailsContent").innerHTML = `
+    <img class="poster" src="https://image.tmdb.org/t/p/w500${data.poster_path}">
+    <h2>${data.title || data.name}</h2>
+
+    <p><b>⭐ ${data.vote_average}</b> | ${data.release_date || data.first_air_date}</p>
+
+    <p>${data.overview}</p>
+
+    <p><b>Cast:</b> ${cast}</p>
+
+    ${seasonsHTML}
+
+    ${trailer ? `<button onclick="playTrailer('${trailer.key}')">▶ Watch Trailer</button>` : ""}
+  `;
+
+  // AUTO LOAD FIRST SEASON
+  if (type === "tv" && data.seasons.length > 0) {
+    loadEpisodes(data.seasons[0].season_number);
+  }
+}
+
+/* LOAD EPISODES */
+async function loadEpisodes(seasonNumber) {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/tv/${window.currentShowId}/season/${seasonNumber}?api_key=${API_KEY}`
+  );
+  const data = await res.json();
+
+  const container = document.getElementById("episodesRow");
+  container.innerHTML = "";
+
+  data.episodes.forEach(ep => {
+    const div = document.createElement("div");
+
+    div.style.minWidth = "140px";
+    div.style.cursor = "pointer";
+
+    div.innerHTML = `
+      <img src="https://image.tmdb.org/t/p/w300${ep.still_path}" style="width:100%;border-radius:10px;">
+      <p style="font-size:12px;">Ep ${ep.episode_number}</p>
+    `;
+
+    div.onclick = () => showEpisodeDetails(ep);
+
+    container.appendChild(div);
+  });
+}
+
+/* EPISODE DETAILS */
+function showEpisodeDetails(ep) {
+  document.getElementById("episodeDetails").innerHTML = `
+    <h3>${ep.name}</h3>
+    <p><b>⭐ ${ep.vote_average}</b> | ${ep.air_date}</p>
+    <p>${ep.overview || "No description available."}</p>
+  `;
+}
+
+/* TRAILER */
+function playTrailer(key) {
+  document.getElementById("modal").style.display = "flex";
+  document.getElementById("trailer").src = `https://www.youtube.com/embed/${key}`;
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("trailer").src = "";
+}
+
+/* BACK */
+function goBack() {
+  document.getElementById("home").style.display = "block";
+  document.querySelector(".hero-center").style.display = "flex";
+  document.getElementById("detailsPage").style.display = "none";
+}
+
+/* INIT */
+function init() {
+  loadSection(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`, "trending");
+  loadSection(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`, "top");
+  loadSection(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`, "popular");
+}
+
+init();
+
+</script>
+
+<!-- DETAILS -->
+<div id="detailsPage">
+  <button onclick="goBack()">← Back</button>
+
+  <div id="detailsHero" class="details-hero"></div>
+  <div id="detailsContent" class="details-content"></div>
+</div>
+
+<!-- TRAILER -->
+<div id="modal" class="modal" onclick="closeModal()">
+  <iframe id="trailer" frameborder="0" allowfullscreen></iframe>
+</div>
+
+</body>
+  </html>
